@@ -20,8 +20,10 @@ setupIonicReact()
 
 import type { AppProps } from 'next/app';
 
+import NoSSRWrapper from '../components/NoSSRWrapper';
+
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return <NoSSRWrapper><Component {...pageProps} /></NoSSRWrapper>
 }
 
 export default MyApp
