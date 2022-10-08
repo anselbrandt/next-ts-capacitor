@@ -111,3 +111,32 @@ const nextConfig = {
 module.exports = withTM(nextConfig)
 
 ```
+
+### Fix SSR Failure with Ionic Components
+
+Create a `NoSSRWrapper.tsx` components:
+
+```
+import dynamic from "next/dynamic";
+import { PropsWithChildren } from "react";
+
+const NoSSRWrapper: React.FC<PropsWithChildren> = ({ children }) => <>{children}</>
+
+export default dynamic(() => Promise.resolve(NoSSRWrapper), {
+    ssr: false
+})
+```
+
+Wrap the main `Component` in `_app.tsx` with the above component:
+
+```
+function MyApp({ Component, pageProps }: AppProps) {
+  return <NoSSRWrapper><Component {...pageProps} /></NoSSRWrapper>
+}
+```
+
+### Notes
+
+```
+npx cap sync
+```
